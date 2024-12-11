@@ -1,0 +1,36 @@
+.orders {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.orders td, .orders th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.orders tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.orders tr {
+    transition: background 0.3s;
+}
+
+.orders tr:hover {
+    background: antiquewhite;
+}
+
+.orders th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ff6900;
+    color: white;
+}
+
+.order-form {
+    display: flex;
+    gap: 8rem;
+}

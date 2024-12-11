@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{head.html :: head}"></head>
+
+<body>
+<header th:replace="header.html :: header"></header>
+
+<main class="root">
+    <div class="head">
+        <h2 class="page-title">Меню</h2>
+        <a class="secondaryButton" href="/menu/create">Добавить пиццу</a>
+    </div>
+    <form class="searchForm" action="/menu/search" method="get">
+        <input type="text" name="name" placeholder="Поиск по блюдам">
+        <button type="submit">Поиск</button>
+    </form>
+
+    <div class="menu-grid">
+        <div class="menu-item" th:each="menuItem : ${menuItems}">
+            <img th:src="${menuItem.imageUrl}" alt="Изображение пиццы"/>
+            <h3 class="title" th:text="${menuItem.name}">Название пиццы</h3>
+            <p class="description" th:text="${menuItem.description}">Описание пиццы</p>
+            <p><span th:text="${menuItem.price}">Цена</span> ₽</p>
+            <div class="menu-actions">
+                <form action="/cart/add" method="post" style="display: inline;">
+                    <input type="hidden" name="id" th:value="${menuItem.id}">
+                    <button class="addToCartButton" th:disabled="${!menuItem.availability}" type="submit">Добавить в корзину</button>
+                    <a th:href="'/menu/edit/' + ${menuItem.id}" class="secondaryButton">Редактировать</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <aside class="cart-sidebar">
+        <h3>Корзина</h3>
+        <ul class="cart-items">
+            <li class="cart-item" th:each="item : ${cartItems}">
+                <div>
+                    <img th:src="${item.imageUrl}" alt="Изображение пиццы"/>
+                </div>
+                <div class="cart-item-data">
+                    <span th:text="${item.name}">Название</span>
+                    <p><span th:text="${item.price}">Цена</span> ₽</p>
+                    <form action="/cart/remove" method="post" style="display: inline;">
+                        <input type="hidden" name="id" th:value="${item.id}">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <div class="cart-summary">
+            <p>
+                <strong>Итого:</strong>
+                <span th:text="${totalPrice}">0</span> ₽
+            </p>
+            <div class="cart-summary-buttons">
+                <form action="/cart/clear" method="post">
+                    <button class="secondaryButton" type="submit">Очистить корзину</button>
+                </form>
+                <form action="/orders/create" method="post">
+                    <input type="hidden" name="menuItemIds" th:value="'1,2,3'">
+                    <input type="hidden" name="totalAmount" th:value="${totalPrice}">
+                    <button type="submit">Оформить заказ</button>
+                </form>
+            </div>
+        </div>
+    </aside>
+
+</main>
+<footer th:replace="~{footer.html :: footer}"></footer>
+</body>
+
+</html>

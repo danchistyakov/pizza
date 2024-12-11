@@ -1,0 +1,11 @@
+<header class="header">
+    <h1>BroPizza</h1>
+    <div class="header-menu">
+        <a href="/">Главная</a>
+        <a href="/menu" th:if="${#authorization.expression('hasRole(''ROLE_CLIENT'') or hasRole(''ROLE_ADMIN'')')}">Меню</a>
+        <a href="/orders" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_COURIER'')')}">Заказы</a>
+        <a href="/couriers" th:if="${#authorization.expression('hasRole(''ROLE_COURIER'') or hasRole(''ROLE_ADMIN'')')}">Курьеры</a>
+        <a href="/login" th:if="${#authorization.expression('isAnonymous()')}" role="button">Войти</a>
+        <a href="/logout" th:if="${#authorization.expression('isAuthenticated()')}" role="button">Выйти</a>
+    </div>
+</header>

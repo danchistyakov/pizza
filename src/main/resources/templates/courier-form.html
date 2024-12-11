@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{head.html :: head}"></head>
+
+<body>
+<header th:replace="header.html :: header"></header>
+
+<main class="container form-section">
+    <h2 class="page-title" th:text="${courier.id == null ? 'Добавление курьера' : 'Редактирование курьера'}"></h2>
+    <form class="form-container" th:action="${courier.id == null ? '/couriers/create' : '/couriers/edit/' + courier.id}"
+          method="post">
+        <div class="form-item">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" th:value="${courier.name}" required>
+        </div>
+        <div class="form-item">
+            <label for="phoneNumber">Телефон:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${courier.phoneNumber}" required>
+        </div>
+        <div class="form-item">
+            <label for="isAvailable">Доступность:</label>
+            <input type="checkbox" id="isAvailable" name="isAvailable"
+                   th:checked="${courier.isAvailable ? 'checked' : null}">
+        </div>
+        <div class="form-item">
+            <label for="imageUrl">Ссылка на фото:</label>
+            <input type="url" id="imageUrl" name="imageUrl" th:value="${courier.imageUrl}">
+        </div>
+        <button type="submit">Сохранить</button>
+        <a href="/couriers" class="secondaryButton">Отмена</a>
+    </form>
+</main>
+
+<footer th:replace="~{footer.html :: footer}"></footer>
+</body>
+
+</html>

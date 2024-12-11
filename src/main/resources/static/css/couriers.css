@@ -1,0 +1,90 @@
+.root {
+    margin-left: 40px;
+    width: calc(100% - 380px);
+}
+
+.head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.courier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.courier-item {
+    padding: 1rem 0;
+}
+
+.courier-item img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.courier-item img:hover {
+    transform: translateY(-5px);
+}
+
+.title {
+    margin-top: 0.5rem;
+    color: #ff6900;
+    height: 2rem;
+}
+
+.description {
+    min-height: 38px;
+    margin: 5px 0;
+}
+
+.phone {
+    margin: 5px 0;
+}
+
+.addToCartButton {
+    margin-top: 5px;
+}
+
+.courier-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.courier-actions a svg {
+    width: 24px;
+    height: 24px;
+}
+
+.availabilityButton {
+    display: block;
+    color: #d15700;
+    border-radius: 12px;
+    padding: 12px 48px;
+    margin-top: 5px;
+    text-align: center;
+    border: 1px solid antiquewhite;
+}
+
+.edit-title {
+    margin-bottom: 10px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}

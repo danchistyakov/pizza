@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+    font-family: Rubik, sans-serif;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+body {
+    background: #FFFFFF;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+button {
+    cursor: pointer;
+    background: #ff6900;
+    border-radius: 12px;
+    padding: 12px 48px;
+    color: #FFFFFF;
+}
+
+button:disabled {
+    background: #f3f3f7;
+    color: #767676;
+    cursor: not-allowed;
+}
+
+textarea {
+    width: 100%;
+}
+
+input, textarea {
+    border: 1px solid rgb(226, 226, 233);
+    padding: 16px;
+    border-radius: 12px;
+    transition: border 0.3s;
+}
+
+input:focus, textarea:focus {
+    border: 1px solid rgb(255, 105, 0);
+}
+
+input[type="checkbox"] {
+    width: fit-content !important;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+select {
+    background: transparent;
+}
+
+footer {
+    margin: 40px;
+}
+
+.container {
+    margin: 0 40px;
+}
+
+.secondaryButton {
+    display: block;
+    background: antiquewhite;
+    color: #d15700;
+    border-radius: 12px;
+    padding: 12px 48px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.join {
+    width: 100%;
+}
+
+.page-title {
+    margin: 5px 0 20px 0;
+}

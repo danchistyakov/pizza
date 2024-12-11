@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{head.html :: head}"></head>
+
+<body>
+<header th:replace="header.html :: header"></header>
+
+<main class="container">
+    <h2 class="page-title">Заказы</h2>
+    <table class="orders">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата заказа</th>
+            <th>Статус</th>
+            <th>Общая сумма</th>
+            <th>Позиции</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${orders.isEmpty()}">
+            <td colspan="6">Заказы отсутствуют</td>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}">1</td>
+            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd HH:mm')}">2024-11-21</td>
+            <td>
+                <form class="order-form" th:action="@{/orders/updateStatus}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}">
+                    <select name="status">
+                        <option th:each="status : ${statuses}"
+                                th:value="${status}"
+                                th:text="${status}"
+                                th:selected="${order.status == status}">
+                            Статус
+                        </option>
+                    </select>
+                    <button type="submit" class="button">Сохранить</button>
+                </form>
+            </td>
+            <td><span th:text="${order.totalAmount}">1500</span> ₽</td>
+            <td>
+                <p th:each="item : ${order.menuItems}" th:text="${item.name}">Пицца</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+
+<footer th:replace="~{footer.html :: footer}"></footer>
+
+</body>
+
+</html>
