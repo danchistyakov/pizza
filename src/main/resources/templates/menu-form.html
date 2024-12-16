@@ -29,7 +29,7 @@
 
         <div class="form-item">
             <label for="availability">Доступно:</label>
-            <input type="checkbox" id="availability" name="availability" th:checked="${menuItem.availability ? 'checked' : null}">
+            <input type="checkbox" id="availability" name="availability" th:checked="${menuItem.availability != null and menuItem.availability}">
         </div>
 
         <div class="form-item">

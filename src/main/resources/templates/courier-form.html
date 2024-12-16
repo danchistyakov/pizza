@@ -21,7 +21,8 @@
         <div class="form-item">
             <label for="isAvailable">Доступность:</label>
             <input type="checkbox" id="isAvailable" name="isAvailable"
-                   th:checked="${courier.isAvailable ? 'checked' : null}">
+
+                   th:checked="${courier.isAvailable != null and courier.isAvailable}">
         </div>
         <div class="form-item">
             <label for="imageUrl">Ссылка на фото:</label>
