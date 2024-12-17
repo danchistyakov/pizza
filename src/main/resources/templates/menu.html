@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="~{head.html :: head}"></head>
-
 <body>
 <header th:replace="header.html :: header"></header>
 
@@ -17,57 +15,118 @@
     </form>
 
     <div class="menu-grid">
-        <div class="menu-item" th:each="menuItem : ${menuItems}">
+        <div class="menu-item" th:each="menuItem : ${menuItems}" th:attr="data-id=${menuItem.id}">
             <img th:src="${menuItem.imageUrl}" alt="Изображение пиццы"/>
             <h3 class="title" th:text="${menuItem.name}">Название пиццы</h3>
             <p class="description" th:text="${menuItem.description}">Описание пиццы</p>
             <p><span th:text="${menuItem.price}">Цена</span> ₽</p>
             <div class="menu-actions">
-                <form action="/cart/add" method="post" style="display: inline;">
-                    <input type="hidden" name="id" th:value="${menuItem.id}">
-                    <button class="addToCartButton" th:disabled="${!menuItem.availability}" type="submit">Добавить в корзину</button>
-                    <a th:href="'/menu/edit/' + ${menuItem.id}" class="secondaryButton">Редактировать</a>
-                </form>
+                <button class="addToCartButton"
+                        th:disabled="${!menuItem.availability}"
+                        onclick="addToCart(this.closest('.menu-item').dataset.id)">
+                    Добавить в корзину
+                </button>
+                <a th:href="'/menu/edit/' + ${menuItem.id}" class="secondaryButton">Редактировать</a>
             </div>
         </div>
     </div>
+
     <aside class="cart-sidebar">
         <h3>Корзина</h3>
-        <ul class="cart-items">
-            <li class="cart-item" th:each="item : ${cartItems}">
-                <div>
-                    <img th:src="${item.imageUrl}" alt="Изображение пиццы"/>
-                </div>
-                <div class="cart-item-data">
-                    <span th:text="${item.name}">Название</span>
-                    <p><span th:text="${item.price}">Цена</span> ₽</p>
-                    <form action="/cart/remove" method="post" style="display: inline;">
-                        <input type="hidden" name="id" th:value="${item.id}">
-                        <button type="submit">Удалить</button>
-                    </form>
-                </div>
-            </li>
+        <ul class="cart-items" id="cart-items">
+            <!-- Корзина будет обновляться динамически -->
         </ul>
         <div class="cart-summary">
             <p>
                 <strong>Итого:</strong>
-                <span th:text="${totalPrice}">0</span> ₽
+                <span id="total-price">0</span> ₽
             </p>
             <div class="cart-summary-buttons">
-                <form action="/cart/clear" method="post">
-                    <button class="secondaryButton" type="submit">Очистить корзину</button>
-                </form>
-                <form action="/orders/create" method="post">
-                    <input type="hidden" name="menuItemIds" th:value="'1,2,3'">
-                    <input type="hidden" name="totalAmount" th:value="${totalPrice}">
-                    <button type="submit">Оформить заказ</button>
-                </form>
+                <button class="secondaryButton" onclick="clearCart()">Очистить корзину</button>
+                <button onclick="createOrder()">Оформить заказ</button>
             </div>
         </div>
     </aside>
-
 </main>
-<footer th:replace="~{footer.html :: footer}"></footer>
-</body>
 
+<footer th:replace="~{footer.html :: footer}"></footer>
+
+<script>
+    function addToCart(itemId) {
+        fetch(`/api/cart/add/${itemId}`, {method: 'POST'})
+            .then(response => {
+                if (response.ok) {
+                    updateCart();
+                } else {
+                    alert('Ошибка добавления в корзину');
+                }
+            });
+    }
+
+    function removeFromCart(itemId) {
+        fetch(`/api/cart/remove/${itemId}`, {method: 'DELETE'})
+            .then(response => {
+                if (response.ok) {
+                    updateCart();
+                } else {
+                    alert('Ошибка удаления из корзины');
+                }
+            });
+    }
+
+    function clearCart() {
+        fetch(`/api/cart/clear`, {method: 'DELETE'})
+            .then(response => {
+                if (response.ok) {
+                    updateCart();
+                } else {
+                    alert('Ошибка очистки корзины');
+                }
+            });
+    }
+
+    function updateCart() {
+        fetch(`/api/cart/items`)
+            .then(response => response.json())
+            .then(data => {
+                console.log("API Response:", data); // Лог данных для проверки
+                const cartItems = document.getElementById('cart-items');
+                const totalPrice = document.getElementById('total-price');
+
+                cartItems.innerHTML = ''; // Очищаем старый список
+                totalPrice.textContent = data.totalPrice;
+
+                if (data.cartItems && data.cartItems.length > 0) {
+                    data.cartItems.forEach(item => {
+                        const li = document.createElement('li');
+                        li.classList.add('cart-item');
+                        li.innerHTML = `
+                        <div>
+                            <img src="${item.imageUrl}" alt="Изображение пиццы" />
+                        </div>
+                        <div class="cart-item-data">
+                            <span>${item.name}</span>
+                            <p>${item.price} ₽</p>
+                            <button onclick="removeFromCart(${item.id})">Удалить</button>
+                        </div>
+                    `;
+                        cartItems.appendChild(li);
+                    });
+                } else {
+                    cartItems.innerHTML = '<li>Корзина пуста</li>';
+                }
+            })
+            .catch(error => {
+                console.error("Ошибка при обновлении корзины:", error);
+                alert('Не удалось загрузить корзину');
+            });
+    }
+
+    function createOrder() {
+        alert('Заказ оформлен!');
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCart);
+</script>
+</body>
 </html>

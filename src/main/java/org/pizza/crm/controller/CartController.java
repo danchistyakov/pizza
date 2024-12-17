@@ -4,12 +4,12 @@ import org.pizza.crm.models.Cart;
 import org.pizza.crm.models.MenuItem;
 import org.pizza.crm.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/cart")
 public class CartController {
 
     private final MenuService menuService;
@@ -21,22 +21,30 @@ public class CartController {
         this.cart = cart;
     }
 
-    @PostMapping("/cart/add")
-    public String addToCart(@RequestParam Long id) {
+    @PostMapping("/add/{id}")
+    public ResponseEntity<String> addToCart(@PathVariable Long id) {
         MenuItem item = menuService.getMenuItemById(id);
+        if (item == null) {
+            return new ResponseEntity<>("Menu item not found", HttpStatus.NOT_FOUND);
+        }
         cart.addItem(item);
-        return "redirect:/menu";
+        return new ResponseEntity<>("Item added to cart successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/cart/remove")
-    public String removeFromCart(@RequestParam Long id) {
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<String> removeFromCart(@PathVariable Long id) {
         cart.removeItem(id);
-        return "redirect:/menu";
+        return new ResponseEntity<>("Item removed from cart successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/cart/clear")
-    public String clearCart() {
+    @DeleteMapping("/clear")
+    public ResponseEntity<String> clearCart() {
         cart.clearCart();
-        return "redirect:/menu";
+        return new ResponseEntity<>("Cart cleared successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/items")
+    public ResponseEntity<Cart> getCartItems() {
+        return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 }
