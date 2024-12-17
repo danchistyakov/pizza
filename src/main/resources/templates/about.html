@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head th:replace="~{head.html :: head}"></head>
+
+<body>
+<header th:replace="header.html :: header"></header>
+
+<style>
+    main {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+    h1, h2 {
+        color: #444;
+    }
+    p {
+        line-height: 1.6;
+        margin: 10px 0;
+    }
+</style>
+<main>
+    <section>
+        <h2>ФИО автора</h2>
+        <p>Даниил Чистяков</p>
+    </section>
+
+    <section>
+        <h2>Группа/Учебное заведение</h2>
+        <p>Группа ПИ22-3, Финансовый университет при Правительстве РФ</p>
+    </section>
+
+    <section>
+        <h2>Контактные данные</h2>
+        <p>Email: <a href="mailto:4i.danila@gmail.com">4i.danila@gmail.com</a></p>
+        <p>Телефон: +7 (920) 611-59-49</p>
+    </section>
+
+    <section>
+        <h2>Опыт работы с технологиями</h2>
+        <p>Проект создан с использованием следующих технологий:</p>
+        <ul>
+            <li>Java + Spring Boot — разработка бэкенда</li>
+            <li>MySQL — работа с базой данных</li>
+            <li>HTML, CSS, JavaScript — создание пользовательского интерфейса</li>
+            <li>REST API — взаимодействие между клиентом и сервером</li>
+            <li>Thymeleaf — для генерации HTML-шаблонов на сервере</li>
+        </ul>
+        <p>Опыт работы: более 4 лет разработки веб-приложений.</p>
+    </section>
+
+    <section>
+        <h2>Даты начала и завершения работ</h2>
+        <p><strong>Начало проекта:</strong> 03.10.2024</p>
+        <p><strong>Завершение проекта:</strong> 16.12.2024</p>
+    </section>
+</main>
+<footer th:replace="~{footer.html :: footer}"></footer>
+
+</body>
+</html>

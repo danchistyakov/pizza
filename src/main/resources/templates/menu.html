@@ -89,11 +89,11 @@
         fetch(`/api/cart/items`)
             .then(response => response.json())
             .then(data => {
-                console.log("API Response:", data); // Лог данных для проверки
+                console.log("API Response:", data);
                 const cartItems = document.getElementById('cart-items');
                 const totalPrice = document.getElementById('total-price');
 
-                cartItems.innerHTML = ''; // Очищаем старый список
+                cartItems.innerHTML = '';
                 totalPrice.textContent = data.totalPrice;
 
                 if (data.cartItems && data.cartItems.length > 0) {

@@ -2,6 +2,7 @@
     <h1>BroPizza</h1>
     <div class="header-menu">
         <a href="/">Главная</a>
+        <a href="/about">Об авторе</a>
         <a href="/menu" th:if="${#authorization.expression('hasRole(''ROLE_CLIENT'') or hasRole(''ROLE_ADMIN'')')}">Меню</a>
         <a href="/orders" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_COURIER'')')}">Заказы</a>
         <a href="/couriers" th:if="${#authorization.expression('hasRole(''ROLE_COURIER'') or hasRole(''ROLE_ADMIN'')')}">Курьеры</a>
